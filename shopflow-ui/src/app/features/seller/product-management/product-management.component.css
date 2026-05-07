@@ -1,0 +1,18 @@
+/* Styles spécifiques au composant Product Management */
+::ng-deep .custom-select .mat-mdc-form-field-flex {
+  background-color: #f0fdf4 !important; /* bg-green-50 */
+  border-radius: 12px !important;
+}
+
+::ng-deep .custom-select .mat-mdc-select-value {
+  color: #15803d !important; /* text-green-700 */
+  font-weight: 700 !important;
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: #16a34a !important; /* text-green-600 */
+}
+
+::ng-deep .mat-mdc-pseudo-checkbox-checked.mat-mdc-pseudo-checkbox-minimal::after {
+  color: #16a34a !important;
+}

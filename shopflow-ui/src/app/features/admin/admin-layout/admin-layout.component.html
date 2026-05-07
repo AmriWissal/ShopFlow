@@ -1,0 +1,58 @@
+<div class="min-h-screen bg-slate-50 flex">
+  <!-- Admin Sidebar -->
+  <aside class="w-64 bg-green-50/30 border-r border-green-100/50 hidden lg:flex flex-col sticky top-0 h-screen shadow-sm">
+    <div class="p-8 border-b border-slate-50">
+      <a routerLink="/" class="text-2xl font-bold text-green-600 tracking-tight">ShopFlow</a>
+      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Espace Admin</p>
+    </div>
+
+    <nav class="flex-grow p-4 space-y-2">
+      <a routerLink="/admin/dashboard" routerLinkActive="bg-green-50 text-green-600" 
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all text-sm">
+        <mat-icon class="text-sm">dashboard</mat-icon> Tableau de bord
+      </a>
+      <a routerLink="/admin/products" routerLinkActive="bg-green-50 text-green-600" 
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all text-sm">
+        <mat-icon class="text-sm">inventory_2</mat-icon> Produits
+      </a>
+      <a routerLink="/admin/categories" routerLinkActive="bg-green-50 text-green-600" 
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all text-sm">
+        <mat-icon class="text-sm">category</mat-icon> Catégories
+      </a>
+      <a routerLink="/admin/coupons" routerLinkActive="bg-green-50 text-green-600" 
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all text-sm">
+        <mat-icon class="text-sm">confirmation_number</mat-icon> Coupons
+      </a>
+      <a routerLink="/admin/orders" routerLinkActive="bg-green-50 text-green-600" 
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all text-sm">
+        <mat-icon class="text-sm">shopping_bag</mat-icon> Commandes
+      </a>
+      <a routerLink="/admin/reviews" routerLinkActive="bg-green-50 text-green-600" 
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all text-sm">
+        <mat-icon class="text-sm">rate_review</mat-icon> Avis
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col min-h-screen">
+    <!-- Header for mobile -->
+    <header class="lg:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center">
+      <a routerLink="/" class="text-xl font-bold text-green-600">ShopFlow</a>
+      <button (click)="toggleMobileMenu()" class="p-2 text-slate-600"><mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon></button>
+    </header>
+
+    <div *ngIf="mobileMenuOpen" class="lg:hidden bg-white border-b border-slate-100 p-4 space-y-2">
+      <a routerLink="/admin/dashboard" (click)="closeMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50">Dashboard</a>
+      <a routerLink="/admin/products" (click)="closeMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50">Produits</a>
+      <a routerLink="/admin/categories" (click)="closeMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50">Categories</a>
+      <a routerLink="/admin/coupons" (click)="closeMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50">Coupons</a>
+      <a routerLink="/admin/orders" (click)="closeMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50">Commandes</a>
+      <a routerLink="/admin/reviews" (click)="closeMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-700 hover:bg-slate-50">Avis</a>
+    </div>
+
+    <div class="p-6 lg:p-12">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,94 @@
+<div>
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Gestion des Catégories</h1>
+      <p class="text-slate-500 mt-2">Organisez vos produits en groupes logiques.</p>
+    </div>
+    <button (click)="openModal()" 
+            class="flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 font-bold rounded-xl shadow-lg shadow-green-50 hover:bg-green-200 transition-all">
+      <mat-icon>add</mat-icon> Ajouter une Catégorie
+    </button>
+  </div>
+
+  <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="bg-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            <th class="px-6 py-4">Catégorie</th>
+            <th class="px-6 py-4">Description</th>
+            <th class="px-6 py-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          <tr *ngFor="let cat of categories" class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center">
+                  <mat-icon class="text-sm">category</mat-icon>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-sm font-bold text-slate-900 truncate">{{ cat.name }}</p>
+                  <p class="text-[10px] text-slate-400 truncate">ID: #{{ cat.id }}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <p class="text-sm text-slate-500 line-clamp-2 max-w-md">{{ cat.description }}</p>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex justify-end gap-2">
+                <button (click)="editCategory(cat)" class="p-2 text-blue-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all">
+                  <mat-icon class="text-sm">edit</mat-icon>
+                </button>
+                <button (click)="deleteCategory(cat.id)" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                  <mat-icon class="text-sm">delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden">
+      <div class="p-8 border-b border-slate-50">
+        <h2 class="text-2xl font-bold text-slate-900">{{ editingId ? 'Modifier la Catégorie' : 'Nouvelle Catégorie' }}</h2>
+      </div>
+      
+      <div class="p-8">
+        <form [formGroup]="categoryForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">Nom de la catégorie</label>
+            <input type="text" 
+                   formControlName="name" 
+                   placeholder="Ex: Électronique"
+                   class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-slate-700 placeholder-slate-400">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">Description</label>
+            <textarea formControlName="description" 
+                      rows="3" 
+                      placeholder="Décrivez cette catégorie..."
+                      class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-slate-700 placeholder-slate-400 resize-none"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="p-8 border-t border-slate-50 flex gap-4">
+        <button (click)="closeModal()" 
+                class="flex-1 py-4 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-all">
+          Annuler
+        </button>
+        <button (click)="saveCategory()" 
+                [disabled]="categoryForm.invalid"
+                class="flex-1 py-4 bg-green-100 text-green-700 rounded-xl font-bold hover:bg-green-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+          {{ editingId ? 'Mettre à jour' : 'Créer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

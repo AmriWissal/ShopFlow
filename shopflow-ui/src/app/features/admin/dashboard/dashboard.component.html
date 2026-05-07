@@ -1,0 +1,103 @@
+<div>
+  <div class="mb-10">
+    <h1 class="text-3xl font-black text-slate-900 tracking-tight">Vue d'ensemble</h1>
+    <p class="text-slate-500 mt-2 font-medium">Ravi de vous revoir ! Voici l'activité de votre boutique aujourd'hui.</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl group">
+      <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+        <mat-icon>payments</mat-icon>
+      </div>
+      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Revenu Total</p>
+      <h3 class="text-2xl font-black text-slate-900 mt-1">{{ (stats.totalRevenue || 0) | currency:'TND':'DT ':'1.3-3' }}</h3>
+    </div>
+
+    <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl group">
+      <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+        <mat-icon>shopping_bag</mat-icon>
+      </div>
+      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Commandes Totales</p>
+      <h3 class="text-2xl font-black text-slate-900 mt-1">{{ stats.totalOrders }}</h3>
+    </div>
+
+    <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl group">
+      <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+        <mat-icon>people</mat-icon>
+      </div>
+      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Clients Inscrits</p>
+      <h3 class="text-2xl font-black text-slate-900 mt-1">{{ stats.totalUsers }}</h3>
+    </div>
+
+    <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl group">
+      <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Produits Actifs</p>
+      <h3 class="text-2xl font-black text-slate-900 mt-1">{{ stats.totalProducts }}</h3>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+    <!-- Bar Chart: Monthly Revenue -->
+    <div class="lg:col-span-2 bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+      <h3 class="font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
+        <div class="w-2 h-8 bg-green-500 rounded-full"></div>
+        Évolution des Revenus
+      </h3>
+      <app-chart [data]="stats.chartData" type="bar"></app-chart>
+    </div>
+
+    <!-- Pie Chart: Categories -->
+    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+      <h3 class="font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
+        <div class="w-2 h-8 bg-green-500 rounded-full"></div>
+        Ventes par Catégorie
+      </h3>
+      <app-chart [data]="stats.categoryData" type="pie"></app-chart>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-1 gap-8">
+    <!-- Recent Orders -->
+    <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
+      <div class="p-8 border-b border-slate-50 flex justify-between items-center">
+        <h3 class="font-black text-slate-900 tracking-tight">Dernières Commandes</h3>
+        <a routerLink="/admin/orders" class="text-xs font-black text-green-600 hover:text-green-700 uppercase tracking-widest">Tout voir</a>
+      </div>
+      <div class="p-12 text-center" *ngIf="stats.recentOrders.length === 0">
+        <mat-icon class="text-slate-200 text-4xl h-auto w-auto mb-4">receipt_long</mat-icon>
+        <p class="text-slate-500 font-medium">Aucune commande récente trouvée.</p>
+      </div>
+      <div class="overflow-x-auto" *ngIf="stats.recentOrders.length > 0">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+              <th class="px-8 py-5">N° Commande</th>
+              <th class="px-6 py-5">Client</th>
+              <th class="px-6 py-5">Total</th>
+              <th class="px-8 py-5">Statut</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <tr *ngFor="let order of stats.recentOrders" class="hover:bg-slate-50/50 transition-colors group">
+              <td class="px-8 py-6 text-sm font-black text-slate-900">#{{ order.id }}</td>
+              <td class="px-6 py-6 text-sm text-slate-600 font-medium">{{ order.customer }}</td>
+              <td class="px-6 py-6 text-sm font-black text-slate-900">{{ order.total | currency:'TND':'DT ':'1.3-3' }}</td>
+              <td class="px-8 py-6">
+                <span class="px-3 py-1 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-widest rounded-lg">
+                  {{ order.status === 'PENDING' ? 'En attente' : 
+                     order.status === 'CONFIRMED' ? 'Confirmée' : 
+                     order.status === 'SHIPPED' ? 'Expédiée' : 
+                     order.status === 'DELIVERED' ? 'Livrée' : 'Annulée' }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

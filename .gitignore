@@ -1,0 +1,13 @@
+# Angular
+.angular/
+dist/
+node_modules/
+
+# IntelliJ
+.idea/
+
+# Java
+target/
+
+# Logs
+*.log

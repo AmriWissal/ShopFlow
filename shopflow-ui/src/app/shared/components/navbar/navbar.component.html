@@ -1,0 +1,184 @@
+<nav class="bg-gradient-to-r from-green-50 to-emerald-50 shadow-sm sticky top-0 z-50 border-b border-green-200/50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex justify-between items-center h-20">
+      
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all">
+          <mat-icon class="text-white text-2xl">shopping_bag</mat-icon>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-black text-slate-900 tracking-tight leading-none">Shop<span class="text-green-600">Flow</span></span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Wissal & Mahmoud </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links (Desktop) -->
+      <div class="hidden lg:flex items-center gap-1">
+        <a routerLink="/" routerLinkActive="bg-green-50 text-green-700" [routerLinkActiveOptions]="{exact: true}"
+           class="px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+          Accueil
+        </a>
+        <a routerLink="/products" routerLinkActive="bg-green-50 text-green-700"
+           class="px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+          Produits
+        </a>
+        <a href="#contact" 
+           class="px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+          Contact
+        </a>
+        
+        <!-- Admin/Seller Links -->
+        <ng-container *ngIf="authService.currentUser$ | async as user">
+          <a *ngIf="user.role === 'ADMIN'" routerLink="/admin" routerLinkActive="bg-green-50 text-green-700"
+             class="px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all flex items-center gap-2">
+            <mat-icon class="text-lg">dashboard</mat-icon> 
+            <span>Admin</span>
+          </a>
+          <a *ngIf="user.role === 'SELLER'" routerLink="/seller" routerLinkActive="bg-green-50 text-green-700"
+             class="px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all flex items-center gap-2">
+            <mat-icon class="text-lg">storefront</mat-icon> 
+            <span>Vendeur</span>
+          </a>
+        </ng-container>
+      </div>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center gap-3">
+
+        <!-- Cart Icon -->
+        <a *ngIf="authService.currentUser$ | async" 
+           routerLink="/cart" 
+           class="relative p-3 text-slate-700 hover:text-green-600 hover:bg-green-50 rounded-xl transition-all">
+          <mat-icon>shopping_cart</mat-icon>
+          <span *ngIf="(cartService.cart$ | async)?.items?.length" 
+                class="absolute -top-1 -right-1 bg-green-500 text-white text-[10px] min-w-[20px] h-[20px] flex items-center justify-center rounded-full font-black shadow-md">
+            {{ (cartService.cart$ | async)?.items?.length }}
+          </span>
+        </a>
+
+        <!-- Auth Buttons -->
+        <ng-container *ngIf="authService.currentUser$ | async as user; else guestButtons">
+          <!-- User Menu -->
+          <button [matMenuTriggerFor]="userMenu" 
+                  class="flex items-center gap-2 px-2.5 py-1.5 bg-white hover:bg-slate-50 rounded-lg transition-all border border-slate-200 shadow-sm">
+            <div class="w-7 h-7 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-lg flex items-center justify-center font-black text-xs">
+              {{ (user.fullName || user.email).charAt(0).toUpperCase() }}
+            </div>
+            <div class="hidden sm:flex flex-col items-start">
+              <span class="text-[11px] font-black text-slate-900 leading-tight">{{ user.fullName || 'Utilisateur' }}</span>
+              <span class="text-[8px] font-bold text-green-600 uppercase tracking-wide">
+                {{ user.role === 'ADMIN' ? 'Admin' : user.role === 'SELLER' ? 'Vendeur' : 'Client' }}
+              </span>
+            </div>
+            <mat-icon class="text-slate-400 text-sm">keyboard_arrow_down</mat-icon>
+          </button>
+
+          <mat-menu #userMenu="matMenu" class="custom-user-menu" xPosition="before">
+            <!-- Header du menu -->
+            <div class="px-6 py-4 bg-gradient-to-br from-green-50 to-white border-b border-slate-100">
+              <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-2">Connecté en tant que</p>
+              <p class="text-base font-black text-slate-900 truncate mb-3">{{ user.email }}</p>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 text-green-700 text-xs font-black uppercase rounded-lg">
+                <mat-icon class="text-sm">
+                  {{ user.role === 'ADMIN' ? 'admin_panel_settings' : user.role === 'SELLER' ? 'storefront' : 'person' }}
+                </mat-icon>
+                {{ user.role === 'ADMIN' ? 'Administrateur' : user.role === 'SELLER' ? 'Vendeur' : 'Client' }}
+              </div>
+            </div>
+            
+            <!-- Menu Items -->
+            <div class="py-2">
+              <a mat-menu-item routerLink="/profile" class="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-all">
+                <mat-icon class="text-slate-700 text-2xl">account_circle</mat-icon>
+                <span class="font-bold text-slate-900 text-base">Mon Profil</span>
+              </a>
+
+              <button mat-menu-item (click)="authService.logout()" class="flex items-center gap-4 px-6 py-4 hover:bg-red-50 transition-all">
+                <mat-icon class="text-red-600 text-2xl">logout</mat-icon>
+                <span class="font-bold text-red-600 text-base">Déconnexion</span>
+              </button>
+            </div>
+          </mat-menu>
+        </ng-container>
+
+        <ng-template #guestButtons>
+          <a routerLink="/auth/register" 
+             class="hidden sm:flex items-center gap-2 px-6 py-2.5 text-sm font-bold bg-green-500 hover:bg-green-600 text-white rounded-xl transition-all shadow-md hover:shadow-lg">
+            <mat-icon class="text-lg">person_add</mat-icon>
+            S'inscrire
+          </a>
+          <a routerLink="/auth/login" 
+             class="flex items-center gap-2 px-6 py-2.5 text-sm font-bold bg-white text-green-600 hover:bg-green-50 rounded-xl transition-all border-2 border-green-500">
+            <mat-icon class="text-lg">login</mat-icon>
+            Connexion
+          </a>
+        </ng-template>
+
+        <!-- Mobile Menu Toggle -->
+        <button (click)="toggleMobileMenu()" 
+                class="lg:hidden p-3 text-slate-700 hover:bg-slate-50 rounded-xl transition-all">
+          <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div *ngIf="mobileMenuOpen" class="lg:hidden border-t border-green-200/50 py-4 bg-white/80 backdrop-blur-sm">
+      <div class="space-y-1">
+        <a routerLink="/" (click)="closeMobileMenu()" 
+           class="block px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+          Accueil
+        </a>
+        <a routerLink="/products" (click)="closeMobileMenu()" 
+           class="block px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+          Produits
+        </a>
+        <a href="#contact" (click)="closeMobileMenu()" 
+           class="block px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+          Contact
+        </a>
+        
+        <ng-container *ngIf="authService.currentUser$ | async as user">
+          <a *ngIf="user.role === 'ADMIN'" routerLink="/admin" (click)="closeMobileMenu()" 
+             class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+            <mat-icon class="text-lg">dashboard</mat-icon>
+            Admin
+          </a>
+          <a *ngIf="user.role === 'SELLER'" routerLink="/seller" (click)="closeMobileMenu()" 
+             class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+            <mat-icon class="text-lg">storefront</mat-icon>
+            Vendeur
+          </a>
+          <a routerLink="/profile" (click)="closeMobileMenu()" 
+             class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+            <mat-icon class="text-lg">person</mat-icon>
+            Mon Profil
+          </a>
+          <a routerLink="/cart" (click)="closeMobileMenu()" 
+             class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+            <mat-icon class="text-lg">shopping_cart</mat-icon>
+            Panier
+            <span *ngIf="(cartService.cart$ | async)?.items?.length" 
+                  class="ml-auto bg-green-500 text-white text-xs min-w-[24px] h-[24px] flex items-center justify-center rounded-full font-black">
+              {{ (cartService.cart$ | async)?.items?.length }}
+            </span>
+          </a>
+        </ng-container>
+        
+        <ng-container *ngIf="!(authService.currentUser$ | async)">
+          <a routerLink="/auth/login" (click)="closeMobileMenu()" 
+             class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-green-600 rounded-xl transition-all">
+            <mat-icon class="text-lg">login</mat-icon>
+            Connexion
+          </a>
+          <a routerLink="/auth/register" (click)="closeMobileMenu()" 
+             class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-white bg-green-500 hover:bg-green-600 rounded-xl transition-all">
+            <mat-icon class="text-lg">person_add</mat-icon>
+            S'inscrire
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</nav>

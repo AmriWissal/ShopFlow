@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  font-family: 'Inter', sans-serif; 
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+.mat-typography {
+  font-family: 'Inter', sans-serif;
+}
+
+// Custom styles for pastel green theme
+:root {
+  --primary-color: #22c55e;
+  --primary-light: #f0fdf4;
+  --primary-dark: #16a34a;
+  --success-color: #10b981;
+  --success-bg: #d1fae5;
+  --error-color: #ef4444;
+  --error-bg: #fee2e2;
+  --warning-color: #f59e0b;
+  --warning-bg: #fef3c7;
+  --info-color: #3b82f6;
+  --info-bg: #dbeafe;
+  --welcome-color: #86efac;
+  --welcome-bg: #f0fdf4;
+}
+
+.bg-pastel-green {
+  background-color: var(--primary-light);
+}
+
+.text-pastel-green {
+  color: var(--primary-color);
+}
+
+.btn-primary {
+  @apply bg-green-500 text-white px-6 py-2 rounded-lg transition-all hover:bg-green-600 shadow-sm hover:shadow-md;
+}
+
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-slate-100 p-4 transition-all hover:shadow-md;
+}
+
+/* ===== STYLES POUR LES SNACKBARS (NOTIFICATIONS) ===== */
+
+/* Configuration globale pour positionner les snackbars en haut à droite */
+.mat-mdc-snack-bar-container {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Snackbar de bienvenue - Vert léger avec écriture noire */
+.welcome-snackbar {
+  background-color: #86efac !important; /* Vert léger */
+  color: #000000 !important; /* Écriture noire */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(134, 239, 172, 0.4) !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: #000000 !important; /* Écriture noire */
+    font-weight: 500 !important;
+  }
+  
+  .mat-mdc-button {
+    color: #000000 !important; /* Bouton noir */
+    font-weight: 600 !important;
+  }
+}
+
+/* Snackbar de succès - Vert léger avec écriture noire */
+.success-snackbar {
+  background-color: #86efac !important; /* Vert léger */
+  color: #000000 !important; /* Écriture noire */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(134, 239, 172, 0.4) !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: #000000 !important; /* Écriture noire */
+    font-weight: 500 !important;
+  }
+  
+  .mat-mdc-button {
+    color: #000000 !important; /* Bouton noir */
+    font-weight: 600 !important;
+  }
+}
+
+/* Snackbar d'erreur - Rouge avec écriture blanche */
+.error-snackbar {
+  background-color: #ef4444 !important; /* Rouge */
+  color: #ffffff !important; /* Écriture blanche */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4) !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: #ffffff !important; /* Écriture blanche */
+    font-weight: 500 !important;
+  }
+  
+  .mat-mdc-button {
+    color: #ffffff !important; /* Bouton blanc */
+    font-weight: 600 !important;
+  }
+}
+
+/* Snackbar d'information - Vert léger avec écriture noire */
+.info-snackbar {
+  background-color: #86efac !important; /* Vert léger */
+  color: #000000 !important; /* Écriture noire */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(134, 239, 172, 0.4) !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: #000000 !important; /* Écriture noire */
+    font-weight: 500 !important;
+  }
+  
+  .mat-mdc-button {
+    color: #000000 !important; /* Bouton noir */
+    font-weight: 600 !important;
+  }
+}
+
+/* Snackbar d'avertissement - Vert léger avec écriture noire */
+.warning-snackbar {
+  background-color: #86efac !important; /* Vert léger */
+  color: #000000 !important; /* Écriture noire */
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(134, 239, 172, 0.4) !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: #000000 !important; /* Écriture noire */
+    font-weight: 500 !important;
+  }
+  
+  .mat-mdc-button {
+    color: #000000 !important; /* Bouton noir */
+    font-weight: 600 !important;
+  }
+}
+
+/* Style général pour tous les snackbars */
+.mat-mdc-snack-bar-container {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 12px !important;
+  padding: 16px 20px !important;
+  min-width: 320px !important;
+  
+  .mat-mdc-snack-bar-label {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+  
+  .mat-mdc-button {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+}

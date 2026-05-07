@@ -1,0 +1,46 @@
+/* Styles pour NavbarComponent */
+
+::ng-deep .custom-user-menu {
+  border-radius: 1.25rem !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(34, 197, 94, 0.1) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  min-width: 240px !important;
+  margin-top: 12px !important;
+}
+
+::ng-deep .custom-user-menu .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.user-menu-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.75rem !important;
+  margin: 0.25rem !important;
+  height: auto !important;
+  line-height: normal !important;
+  transition: all 0.2s ease !important;
+}
+
+.user-menu-item:hover {
+  background-color: #f0fdf4 !important; /* bg-green-50 */
+}
+
+.logout-item:hover {
+  background-color: #fef2f2 !important; /* bg-red-50 */
+}
+
+::ng-deep .user-menu-item .mat-mdc-menu-item-text {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  width: 100% !important;
+}
+
+/* Suppression des styles par défaut de Angular Material */
+::ng-deep .mat-mdc-menu-panel {
+  max-width: none !important;
+}

@@ -1,0 +1,62 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-24 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-green-500/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
+
+  <div class="max-w-md w-full relative z-10">
+    <div class="text-center mb-12">
+      <a routerLink="/" class="inline-flex items-center gap-2 group mb-10">
+        <div class="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center shadow-lg shadow-green-200 group-hover:scale-110 transition-transform duration-300">
+          <mat-icon class="text-white">shopping_bag</mat-icon>
+        </div>
+        <span class="text-3xl font-black text-slate-900 tracking-tight">Shop<span class="text-green-500">Flow</span></span>
+      </a>
+      <h2 class="text-4xl font-black text-slate-900 tracking-tight">Ravi de vous revoir</h2>
+      <p class="mt-4 text-slate-500 font-medium">Entrez vos identifiants pour accéder à votre compte</p>
+    </div>
+
+    <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-8">
+        <div>
+          <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Adresse Email</label>
+          <div class="relative group">
+            <input type="email" formControlName="email" placeholder="votre@email.com" 
+                   class="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:bg-white transition-all font-medium">
+            <mat-icon class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-green-500 transition-colors">email</mat-icon>
+          </div>
+          <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']" class="mt-2 text-[10px] font-black text-red-500 uppercase tracking-widest">L'email est requis</p>
+        </div>
+
+        <div>
+          <div class="flex justify-between mb-4">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mot de passe</label>
+            <a href="#" class="text-[10px] font-black text-green-600 hover:text-green-700 uppercase tracking-widest">Oublié ?</a>
+          </div>
+          <div class="relative group">
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="••••••••" 
+                   class="w-full pl-14 pr-14 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:bg-white transition-all font-medium">
+            <mat-icon class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-green-500 transition-colors">lock</mat-icon>
+            <button type="button" (click)="showPassword = !showPassword" class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-600 transition-colors">
+              <mat-icon class="text-xl">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid || loading" 
+                class="w-full py-5 bg-green-500 text-white font-black rounded-[2rem] shadow-2xl shadow-green-100 hover:bg-green-600 hover:-translate-y-1 disabled:opacity-30 disabled:translate-y-0 transition-all text-xs uppercase tracking-[0.2em]">
+          <span *ngIf="!loading">Se connecter</span>
+          <span *ngIf="loading" class="flex items-center justify-center gap-3">
+            <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            Connexion...
+          </span>
+        </button>
+      </form>
+
+      <div class="mt-10 pt-10 border-t border-slate-50 text-center">
+        <p class="text-sm text-slate-500 font-medium">
+          Pas encore de compte ? 
+          <a routerLink="/auth/register" class="font-black text-green-600 hover:text-green-700 ml-2 uppercase tracking-widest text-[10px]">Créer un compte</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

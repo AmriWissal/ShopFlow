@@ -1,0 +1,13 @@
+/* Styles pour ReviewManagementComponent */
+
+/* Animation de chargement */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Transition douce pour les cartes */
+.hover\:shadow-md {
+  transition: box-shadow 0.3s ease;
+}
